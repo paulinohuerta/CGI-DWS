@@ -1,19 +1,18 @@
-#!/usr/bin/perl
-    use CGI;
+#!/usr/bin/perl -w
+use CGI;
 
-    my $q = new CGI;
+my $q = new CGI;
 
-    print $q->header;
+if(!$q->param) {
+    print $q->header(-charset => 'utf-8');
 
     print $q->start_html(-title => 'Formulario');
-    print $q->start_form;
     print $q->start_form(
         -name    => 'main_form',
         -method  => 'GET',
         -enctype => &CGI::URL_ENCODED,
         -onsubmit => 'return javascript:validation_function()',
-        -action => '/where/your/form/gets/sent', # Defaults to 
-                                                 # the current program
+        #-action => '',   # Defaults to the current program
     );
     print $q->textfield(
         -name      => 'Nombre',
@@ -22,7 +21,7 @@
         -maxlength => 30,
     );
 
-    print $q->'¿Cuáles son los lenguajes que conoces?';
+    print $q->h2('¿Cuáles son los lenguajes que conoces?');
     print $q->checkbox_group(
         -name     => 'Lenguaje',
         -values   => ['Java', 'Perl', 'Python', 'Unity'],
@@ -31,7 +30,7 @@
         -rows     => 2,
     );
 
-    print $q->'¿Cuál es tu favorito?';
+    print $q->h3('¿Cuál es tu favorito?');
     print $q->radio_group(
         -name     => 'Favorito',
         -values   => ['Java', 'Perl', 'Python', 'Unity'],
@@ -45,6 +44,14 @@
         -onsubmit => 'javascript: validate_form()',
     );
     print $q->end_form;
-
+    print $q->end_html;
+}
+else {
+   # process fields form and then sending results
+    print $q->header(-charset => 'utf-8');
+    print $q->start_html(-title => 'Formulario');
+    print $q->h3('Por desarrollar ....');
+    print $q->end_html;
+}
 
 
